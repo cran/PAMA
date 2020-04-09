@@ -1,6 +1,6 @@
 
-BARDM.Cov=function(datfile,Covdatfile,nRe,iter){
-  #' This function implements Bayesian inference of BARD-Mallows model with covariates.
+PAMA.Cov=function(datfile,Covdatfile,nRe,iter){
+  #' This function implements Bayesian inference of PAMA model with covariates.
   #'
   #' @export
   #' @import PerMallows
@@ -18,13 +18,13 @@ BARDM.Cov=function(datfile,Covdatfile,nRe,iter){
   #'   \item l.mat: posterior samples of log-likelihood.
   #'   \item theta.mat: posterior samples of coefficients of covariates.
   #' }
-  #' @details The covariates are incoporated in the BARDM framework as indicators of groupmember. That is covariates are associated to group members via a logistic regression.
+  #' @details The covariates are incoporated in the PAMA framework as indicators of groupmember. That is covariates are associated to group members via a logistic regression.
   #' @examples
   #' a=NBANFL()
-  #' BARDM.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=10)
-  #' \donttest{BARDM.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=1000)}
+  #' PAMA.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=10)
+  #' \donttest{PAMA.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=1000)}
 
-  # this function implements Bayesian inference of BARD-Mallows model with covariates.
+  # this function implements Bayesian inference of PAMA model with covariates.
   # The input
   # parameter 'datfile': this is the data where our algorithm will work on. Each row denotes a ranker's ranking. The data should be in entity-based format.
   # parameter 'Covdatfile': this is data of covariates.

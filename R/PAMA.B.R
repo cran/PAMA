@@ -1,5 +1,5 @@
-BARDM.B=function(datfile,nRe,iter=1000){
-  #' This function implements Bayesian inference of BARD-Mallows model.
+PAMA.B=function(datfile,nRe,iter=1000){
+  #' This function implements Bayesian inference of PAMA model.
   #'
   #' @export
   #' @import PerMallows
@@ -17,9 +17,9 @@ BARDM.B=function(datfile,nRe,iter=1000){
   #' }
   #' @examples
   #' dat=t(PerMallows::rmm(10,1:20,0.5))
-  #' BARDM.B(dat,10,iter=10)
-  #' \donttest{BARDM.B(dat,10,iter=1000)}
-  # this function implements Bayesian inference of BARD-Mallows model ().
+  #' PAMA.B(dat,10,iter=10)
+  #' \donttest{PAMA.B(dat,10,iter=1000)}
+  # this function implements Bayesian inference of PAMA model ().
   # The input
 # parameter 'datfile': this is the data where our algorithm will work on. Each row denotes a ranker's ranking. The data should be in entity-based format.
   # parameter 'nRe' : number of relevant entities

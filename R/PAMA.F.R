@@ -1,5 +1,5 @@
-BARDM.F=function(datfile,nRe,threshold,iter=1000){
-  #' This function implements Maximum Likelihood estimation of BARD-Mallows model.
+PAMA.F=function(datfile,nRe,threshold,iter=1000){
+  #' This function implements Maximum Likelihood estimation of PAMA model.
   #'
   #' @export
   #' @import PerMallows
@@ -19,7 +19,7 @@ BARDM.F=function(datfile,nRe,threshold,iter=1000){
   #' }
   #' @examples
   #' a=NBANFL()
-  #' BARDM.F(a$NBA,nRe=10,threshold=0.1,iter=100)
+  #' PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=100)
 
 
   dat=datfile

@@ -1,5 +1,5 @@
-BARDM.PL=function(datfile,PLdatfile,nRe,iter){
-  #' This function implements Bayesian inference of BARD-Mallows model with covariates.
+PAMA.PL=function(datfile,PLdatfile,nRe,iter){
+  #' This function implements Bayesian inference of PAMA model with partial lists.
   #'
   #' @export
   #' @import PerMallows
@@ -19,10 +19,10 @@ BARDM.PL=function(datfile,PLdatfile,nRe,iter){
   #' @details The partial lists are handle by Data Augmentation strategy.
   #' @examples
   #' a=NBANFL()
-  #' BARDM.PL(a$NBA,a$NBAPL,nRe=10,iter=1)
-  #' \donttest{BARDM.PL(a$NBA,a$NBAPL,nRe=10,iter=100)}
+  #' PAMA.PL(a$NBA,a$NBAPL,nRe=10,iter=1)
+  #' \donttest{PAMA.PL(a$NBA,a$NBAPL,nRe=10,iter=100)}
   #'
-  # this function implements Bayesian inference of BARD-Mallows model with Partial lists.
+  # this function implements Bayesian inference of PAMA model with Partial lists.
   # The input
   # parameter 'datfile': this is the data where our algorithm will work on. Each colomn denotes a ranker's ranking. The data should be in entity-based format.
   # parameter 'PLdatfile': this is data of partial lists.

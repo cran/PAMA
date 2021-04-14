@@ -9,22 +9,25 @@ gprimegammak=function(bsrkr,I,phi,smlgamma){
   rank_RE=bsrkr[I>0] #find out the relative entities
   nRe=length(rank_RE) # d
   n=length(I)
-  gprime=gprime+(-phi)*PerMallows::distance(rank(rank_RE),I[I>0])
-
-
+  gprime=gprime+(-phi)*distance(rank(rank_RE),I[I>0])
+  
+  
   tau01=conditionalranking(I,bsrkr)+1 # return tau01 (power law 1:nRe+1)
   n01=unlist(lapply(c(1:(nRe+1)), function(i) sum(tau01==i)))
   gprime=gprime-sum(n01*log(c(1:(nRe+1)))) # part2
-
-  for (i in 1:(nRe-1)){
-    denorm=0
-    normi=0
-    for (j in 0:i){
-      denorm=denorm+exp(-j*phi*smlgamma)
-      normi=normi+exp(-j*phi*smlgamma)*j*phi
-    }
-    gprime=gprime+normi/denorm
+  
+  #E
+  for(i in 2:nRe){
+    gprime = gprime- i*phi*exp(-i*phi*smlgamma)/(1-exp(-i*phi*smlgamma))
   }
+  
+  for(i in 2:nRe){
+    gprime = gprime+ 1*phi*exp(-phi*smlgamma)/(1-exp(-phi*smlgamma))
+  }
+  
+  
+  
+  
   Cgamma=sum(c(1:(nRe+1))^(-smlgamma)) # C(.) normalizing constant
   normi=0
   normi=sum(c(1:(nRe+1))^(-smlgamma)*log(c(1:(nRe+1))))

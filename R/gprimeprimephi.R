@@ -9,16 +9,18 @@ gprimeprimephi=function(bsrkr,I,phi,smlgamma){
   nRe=sum(I>0)
   gprimeprime=0
   for(k in 1:m){
-    for (i in 1:(nRe-1)){
-      denorm=0
-      normi1=0
-      normi2=0
-      for (j in 0:i){
-        denorm=denorm+exp(-j*phi*smlgamma[k])
-        normi1=normi1+exp(-j*phi*smlgamma[k])*j*smlgamma[k]
-        normi2=normi2+exp(-j*phi*smlgamma[k])*j^2*smlgamma[k]^2
-      }
-      gprimeprime=gprimeprime+(normi1^2-denorm*normi2)/denorm^2
+    for (i in 2:(nRe)){
+      gprimeprime=gprimeprime+(i^2)*(smlgamma[k]^2)*exp(-i*phi*smlgamma[k])/((1-exp(-i*phi*smlgamma[k]))^2)
+     
+      
+    }
+  }
+  
+  for(k in 1:m){
+    for (i in 2:(nRe)){
+      gprimeprime=gprimeprime-1*(smlgamma[k]^2)*exp(-phi*smlgamma[k])/((1-exp(-phi*smlgamma[k]))^2)
+      
+      
     }
   }
   return(gprimeprime)

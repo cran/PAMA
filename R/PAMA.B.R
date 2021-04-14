@@ -30,7 +30,8 @@ PAMA.B=function(datfile,nRe,iter=1000){
   # Output: phi.mat: posterior samples of \phi
   # Output: smlgamma.mat: posterior samples of \gamma
   # Output: l.mat: posterior samples of log-likelihood
-
+  #' @author Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng
+  #' @references Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
 
 
   #source('conditionalranking.R')

@@ -31,3 +31,9 @@ This function implements Maximum Likelihood estimation of PAMA model.
 a=NBANFL()
 PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=100)
 }
+\references{
+Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
+}
+\author{
+Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng
+}

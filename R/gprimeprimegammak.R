@@ -8,18 +8,15 @@ gprimeprimegammak=function(bsrkr,I,phi,smlgamma){
   gprimeprime=0
   nRe=sum(I>0)
  n=length(I)
-  
-  for (i in 1:(nRe-1)){
-    denorm=0
-    normi1=0
-    normi2=0
-    for (j in 0:i){
-      denorm=denorm+exp(-j*phi*smlgamma)
-      normi1=normi1+exp(-j*phi*smlgamma)*j*phi
-      normi2=normi2+exp(-j*phi*smlgamma)*j^2*phi^2
-    }
-    gprimeprime=gprimeprime+(normi1^2-denorm*normi2)/denorm^2
-  }
+ 
+ for (i in 2:(nRe)){
+   gprimeprime=gprimeprime+(i^2)*(phi^2)*exp(-i*phi*smlgamma)/((1-exp(-i*phi*smlgamma))^2)
+ }
+ 
+ for (i in 2:(nRe)){
+   gprimeprime=gprimeprime-1*(phi^2)*exp(-phi*smlgamma)/((1-exp(-phi*smlgamma))^2)
+ }
+ 
   Cgamma=sum(c(1:(nRe+1))^(-smlgamma)) # C(.) normalizing constant
   normi1=0
   normi=sum(c(1:(nRe+1))^(-smlgamma)*(log(c(1:(nRe+1)))^2))

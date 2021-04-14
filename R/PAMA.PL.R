@@ -29,6 +29,8 @@ PAMA.PL=function(datfile,PLdatfile,nRe,iter){
   # parameter 'nRe' : number of relevant entities
   # parameter 'iter' : numner of iterations of MCMC
   #parameter 'threshold': the stopping threshold in determining convergence of MLE. if the two consecutive iterations of log-likelihood is smaller than threshold, then the convergence achives.
+  #' @author Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng
+  #' @references Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
 
   # The output
   #  Output: I.mat: posterior samples of I

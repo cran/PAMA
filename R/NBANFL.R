@@ -2,7 +2,7 @@ NBANFL=function(){
   #' Dataset of NBA and NFL.
   #'
   #' @export
-  #' @return List. It contains Bayesian posterior samples of all the parameters and log-likelihood.
+  #' @return List. It contains four data sets used in literature.
   #' \enumerate{
   #'   \item NBA: full ranking lists of NBA power ranking.
   #'   \item NBAPL: The partial lists of NBA power ranking
@@ -11,6 +11,13 @@ NBANFL=function(){
   #' }
   #' @examples
   #' NBANFL()
+  #'
+  #' @references
+  #' \enumerate{
+  #'     \item Ke Deng, Simeng Han, Kate J. Li & Jun S. Liu (2014) Bayesian Aggregation of Order-Based Rank Data, Journal of the American Statistical Association, 109:507, 1023-1039
+  #'     \item Li, X., Yi, D., and Liu, J. S. (2021).  Bayesian analysis of rank data with covariates andheterogeneous rankers.Statistical Science, (In press)
+  #' }
+
   tau = matrix(c(1,3,7,5,8,6,14,15,2,4,9,10,19,11,12,18,13,21,16,20,17,22,23,27,25,29,28,24,26,30,
                  2,3,10,11,5,7,13,16,1,4,6,8,9,12,18,23,14,15,17,22,19,21,20,28,25,24,27,26,29,30,
                  1,2,11,10,6,7,14,13,3,4,9,8,5,17,12,26,15,16,20,19,24,23,22,18,25,21,28,29,27,30,

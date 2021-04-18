@@ -31,7 +31,7 @@ PAMA.B(dat,10,iter=10)
 \donttest{PAMA.B(dat,10,iter=1000)}
 }
 \references{
-Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
+Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation. Journal of the American Statistical Association
 }
 \author{
 Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng

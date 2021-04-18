@@ -7,7 +7,7 @@
 NBANFL()
 }
 \value{
-List. It contains Bayesian posterior samples of all the parameters and log-likelihood.
+List. It contains four data sets used in literature.
 \enumerate{
   \item NBA: full ranking lists of NBA power ranking.
   \item NBAPL: The partial lists of NBA power ranking
@@ -20,4 +20,11 @@ Dataset of NBA and NFL.
 }
 \examples{
 NBANFL()
+
+}
+\references{
+\enumerate{
+    \item Ke Deng, Simeng Han, Kate J. Li & Jun S. Liu (2014) Bayesian Aggregation of Order-Based Rank Data, Journal of the American Statistical Association, 109:507, 1023-1039
+    \item Li, X., Yi, D., and Liu, J. S. (2021).  Bayesian analysis of rank data with covariates andheterogeneous rankers.Statistical Science, (In press)
+}
 }

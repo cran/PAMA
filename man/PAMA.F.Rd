@@ -11,15 +11,15 @@ PAMA.F(datfile, nRe, threshold, iter = 1000)
 
 \item{nRe}{A number. Number of relevant entities.}
 
-\item{threshold}{A number(positive). The stopping threshold in determining convergence of MLE. if the two consecutive iterations of log-likelihood is smaller than threshold, then the convergence achives.}
+\item{threshold}{A number (positive). The stopping threshold in determining convergence of MLE. If the two consecutive iterations of log-likelihood is smaller than the threshold, then the convergence is satisfied.}
 
 \item{iter}{A number. Numner of iterations of MCMC.}
 }
 \value{
-List. It contains MLE of all the parameters and log-likelihood.
+List. It contains MLE of all the parameters and log-likelihood. We use an iterative procedure to find the MLEs, so there are several values for each parameter until convergence.
 \enumerate{
 \item I.mat:  samples of I
-\item phi.mat:  samples of phi.
+\item phi.mat:  samples of phi
 \item smlgamma.mat:  samples of gamma
 \item l.mat:  samples of log-likelihood
 }
@@ -32,7 +32,7 @@ a=NBANFL()
 PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=100)
 }
 \references{
-Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
+Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation. Journal of the American Statistical Association
 }
 \author{
 Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng

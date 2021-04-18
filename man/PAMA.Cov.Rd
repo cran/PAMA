@@ -29,15 +29,16 @@ List. It contains Bayesian posterior samples of all the parameters and log-likel
 This function implements Bayesian inference of PAMA model with covariates.
 }
 \details{
-The covariates are incoporated in the PAMA framework as indicators of groupmember. That is covariates are associated to group members via a logistic regression.
+The covariates are incoporated in the PAMA framework as indicators of group membership. That is, covariates are associated to group members via a logistic regression.
 }
 \examples{
 a=NBANFL()
 PAMA.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=10)
-\donttest{PAMA.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=1000)}
+\dontrun{PAMA.Cov(t(a$NFLdata),a$NFLcov,nRe=10,iter=1000)}
+
 }
 \references{
-Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation *Journal of the American Statistical Association*
+Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation. Journal of the American Statistical Association
 }
 \author{
 Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng

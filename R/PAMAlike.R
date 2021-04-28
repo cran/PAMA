@@ -1,11 +1,21 @@
-BARDMallowslikepower=function(bsrkr,I,phi,smlgamma){
-  # this function returns log-likelihood of observation
-  # bsrkr is the observed base ranker
-  # I is the true classification of entities
-  # I_r is the true ranking of the relative entities
-  # phi is the disperse parameter in Mallows model
-  # smlgamma is the parameter to distinguish relative and background entities
- # source('conditionalranking.R')
+PAMAlike=function(bsrkr,I,phi,smlgamma){
+  #' this function returns the log-likelihood of an observed ranking list given the parameters.
+  #' @export
+  #' @export
+  #' @import PerMallows
+  #' @import stats
+  #' @import mc2d
+  #' @import ExtMallows
+  #' @param bsrkr It is a observed ranking list.
+  #' @param I It is the true classification of entities. 0 denotes the corresponding entity is a background entity. The positive integer denotes the relative rankings of a relevant entity.
+  #' @param phi It is a positive number. It is the common disperse parameter in Mallows model for all the rankers
+  #' @param  smlgamma A positive number. It is the quality parameter of the ranker. It is used to distinguish relative and background entities
+  #' @return The lon-likelihood of barkr given I, phi and smlgamma
+  #' @examples
+  #' dat=t(PerMallows::rmm(10,1:20,0.5))
+  #' I=c(1:10,rep(0,10))
+  #' like=PAMAlike(bsrkr=dat[,1],I=I,phi=0.2,smlgamma=1)
+  # source('conditionalranking.R')
 
   rank_RE= bsrkr[I>0] #find out the relative entities
   mallowlike=PerMallows::dmm(rank(rank_RE),I[I>0], phi*smlgamma) # likelihood of reletive entities using Mallows

@@ -1,14 +1,16 @@
-PAMA.F=function(datfile,nRe,threshold,iter=1000){
+PAMA.F=function(datfile,nRe,threshold,iter=1000,init="EMM"){
   #' This function implements Maximum Likelihood estimation of PAMA model.
   #'
   #' @export
   #' @import PerMallows
   #' @import stats
   #' @import mc2d
+  #' @import ExtMallows
   #' @param datfile A matrix or dataframe. This is the data where our algorithm will work on. Each row denotes a ranker's ranking. The data should be in entity-based format.
   #' @param nRe A number. Number of relevant entities.
   #' @param iter A number. Numner of iterations of MCMC.
   #' @param threshold A number (positive). The stopping threshold in determining convergence of MLE. If the two consecutive iterations of log-likelihood is smaller than the threshold, then the convergence is satisfied.
+  #' @param init A string. This indicates which method is used to initiate the starting point of the aggregated ranking list. "mean" uses the sample mean. "EMM" uses the method from R package 'ExtMallows'.
 
   #' @return List. It contains MLE of all the parameters and log-likelihood. We use an iterative procedure to find the MLEs, so there are several values for each parameter until convergence.
   #' \enumerate{
@@ -19,7 +21,7 @@ PAMA.F=function(datfile,nRe,threshold,iter=1000){
   #' }
   #' @examples
   #' a=NBANFL()
-  #' PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=100)
+  #' PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=10)
   #' @author Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng
   #' @references Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation. Journal of the American Statistical Association
 
@@ -38,10 +40,17 @@ PAMA.F=function(datfile,nRe,threshold,iter=1000){
   smlgamma.lower=0.01
   ## starting point of I
   phi.start=0.3
-  mallowsinfer=PerMallows::lmm(t(dat),dist.name="kendall",estimation="approx")
-  mallowsinfer=mallowsinfer$mode
-  mallowsinfer[mallowsinfer>nRe]=0
-  I.start=mallowsinfer
+  if(init=="EMM"){
+    mallowsinfer=ExtMallows::EMM((dat))
+    mallowsinfer=as.numeric(mallowsinfer$op.pi0)
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  } else if(init=="mean"){
+    mallowsinfer=PerMallows::lmm(t(dat),dist.name="kendall",estimation="approx")
+    mallowsinfer=mallowsinfer$mode
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  }
 
   smlgamma.start=rep(runif(1,smlgamma.lower,smlgamma.upper),m)
   ## create matrix to store all the MCMC results

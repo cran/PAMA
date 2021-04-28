@@ -4,7 +4,7 @@
 \alias{PAMA.F}
 \title{This function implements Maximum Likelihood estimation of PAMA model.}
 \usage{
-PAMA.F(datfile, nRe, threshold, iter = 1000)
+PAMA.F(datfile, nRe, threshold, iter = 1000, init = "EMM")
 }
 \arguments{
 \item{datfile}{A matrix or dataframe. This is the data where our algorithm will work on. Each row denotes a ranker's ranking. The data should be in entity-based format.}
@@ -14,6 +14,8 @@ PAMA.F(datfile, nRe, threshold, iter = 1000)
 \item{threshold}{A number (positive). The stopping threshold in determining convergence of MLE. If the two consecutive iterations of log-likelihood is smaller than the threshold, then the convergence is satisfied.}
 
 \item{iter}{A number. Numner of iterations of MCMC.}
+
+\item{init}{A string. This indicates which method is used to initiate the starting point of the aggregated ranking list. "mean" uses the sample mean. "EMM" uses the method from R package 'ExtMallows'.}
 }
 \value{
 List. It contains MLE of all the parameters and log-likelihood. We use an iterative procedure to find the MLEs, so there are several values for each parameter until convergence.
@@ -29,7 +31,7 @@ This function implements Maximum Likelihood estimation of PAMA model.
 }
 \examples{
 a=NBANFL()
-PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=100)
+PAMA.F(a$NBA,nRe=10,threshold=0.1,iter=10)
 }
 \references{
 Wanchuang Zhu, Yingkai Jiang, Jun S. Liu, Ke Deng (2021) Partition-Mallows Model and Its Inference for Rank Aggregation. Journal of the American Statistical Association

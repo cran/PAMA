@@ -4,7 +4,7 @@
 \alias{PAMA.Cov}
 \title{This function implements Bayesian inference of PAMA model with covariates.}
 \usage{
-PAMA.Cov(datfile, Covdatfile, nRe, iter)
+PAMA.Cov(datfile, Covdatfile, nRe, iter = 1000, init = "EMM")
 }
 \arguments{
 \item{datfile}{A matrix or dataframe. This is the data where our algorithm will work on. Each colomn denotes a ranker's ranking. The data should be in entity-based format.}
@@ -14,6 +14,8 @@ PAMA.Cov(datfile, Covdatfile, nRe, iter)
 \item{nRe}{A number. Number of relevant entities}
 
 \item{iter}{A number. Numner of iterations of MCMC. Defaulted as 1000.}
+
+\item{init}{A string. This indicates which method is used to initiate the starting point of the aggregated ranking list. "mean" uses the sample mean. "EMM" uses the method from R package 'ExtMallows'.}
 }
 \value{
 List. It contains Bayesian posterior samples of all the parameters and log-likelihood.

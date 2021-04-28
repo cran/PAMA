@@ -1,15 +1,17 @@
 
-PAMA.Cov=function(datfile,Covdatfile,nRe,iter){
+PAMA.Cov=function(datfile,Covdatfile,nRe,iter=1000,init="EMM"){
   #' This function implements Bayesian inference of PAMA model with covariates.
   #'
   #' @export
   #' @import PerMallows
   #' @import stats
   #' @import mc2d
+  #' @import ExtMallows
   #' @param datfile A matrix or dataframe. This is the data where our algorithm will work on. Each colomn denotes a ranker's ranking. The data should be in entity-based format.
   #' @param Covdatfile  A matrix or dataframe. Each column denotes a covariate.
   #' @param nRe A number. Number of relevant entities
   #' @param iter A number. Numner of iterations of MCMC. Defaulted as 1000.
+  #' @param init A string. This indicates which method is used to initiate the starting point of the aggregated ranking list. "mean" uses the sample mean. "EMM" uses the method from R package 'ExtMallows'.
   #' @return List. It contains Bayesian posterior samples of all the parameters and log-likelihood.
   #' \enumerate{
   #'   \item I.mat: posterior samples of I
@@ -58,8 +60,17 @@ PAMA.Cov=function(datfile,Covdatfile,nRe,iter){
   ## starting point
   phi.start=0.3
   phi.hyper=0.05
-  I.start=PerMallows::lmm(t(dat))$mode
-  I.start[I.start>nRe]=0
+  if(init=="EMM"){
+    mallowsinfer=ExtMallows::EMM((dat))
+    mallowsinfer=as.numeric(mallowsinfer$op.pi0)
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  } else if(init=="mean"){
+    mallowsinfer=PerMallows::lmm(t(dat),dist.name="kendall",estimation="approx")
+    mallowsinfer=mallowsinfer$mode
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  }
   theta.start=runif(nc+1,-1,1)
   theta.hyper=rep(0.01,nc+1)
 
@@ -136,8 +147,8 @@ PAMA.Cov=function(datfile,Covdatfile,nRe,iter){
       smlgamma.tem=smlgamma.start[j]
       smlgamma.tem=smlgamma.tem+gamma.hyper[j]*rnorm(1)
       if(smlgamma.tem>smlgamma.lower && smlgamma.tem< smlgamma.upper){
-        like.start=BARDMallowslikepower(dat[,j],I.start,phi.start,smlgamma.start[j])
-        like.tem=BARDMallowslikepower(dat[,j],I.start,phi.start,smlgamma.tem)
+        like.start=PAMAlike(dat[,j],I.start,phi.start,smlgamma.start[j])
+        like.tem=PAMAlike(dat[,j],I.start,phi.start,smlgamma.tem)
         if((like.tem-like.start) > log(runif(1))){
           smlgamma.start[j]=smlgamma.tem
         }

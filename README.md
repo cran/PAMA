@@ -10,6 +10,7 @@ Four main R functions for PAMA model.
 2. PAMA.F.R  This function implements Maximum Likelihood estimation of PAMA model.
 3. PAMA.PL.R This function implements Bayesian inference of PAMA model with partial lists.
 4. PAMA.Cov.R This function implements Bayesian inference of PAMA model with covariates.
+5. PAMAlike.R This function returns the log-likelihood of an observed ranking list given the parameters.
 
 # Examples
 

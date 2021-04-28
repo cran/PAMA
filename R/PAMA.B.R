@@ -1,13 +1,16 @@
-PAMA.B=function(datfile,nRe,iter=1000){
+PAMA.B=function(datfile,nRe,iter=1000,init="EMM"){
   #' This function implements Bayesian inference of PAMA model.
   #'
   #' @export
   #' @import PerMallows
   #' @import stats
   #' @import mc2d
+  #' @import ExtMallows
+
   #' @param datfile A matrix or dataframe. This is the data where our algorithm will work on. Each colomn denotes a ranker's ranking. The data should be in entity-based format.
   #' @param nRe A number. Number of relevant entities
   #' @param iter A number. Numner of iterations of MCMC
+  #' @param init A string. This indicates which method is used to initiate the starting point of the aggregated ranking list. "mean" uses the sample mean. "EMM" uses the method from R package 'ExtMallows'.
   #' @return List. It contains Bayesian posterior samples of all the parameters and log-likelihood.
   #' \enumerate{
   #'   \item I.mat: posterior samples of I
@@ -35,7 +38,7 @@ PAMA.B=function(datfile,nRe,iter=1000){
 
 
   #source('conditionalranking.R')
-  #source('BARDMallowslikepower.R')
+  #source('PAMAlike.R')
   #source('fulllikepower.R')
   adaptation=0.25*iter
   dat=datfile
@@ -51,10 +54,19 @@ PAMA.B=function(datfile,nRe,iter=1000){
   phi.start=0.5
   phi.hyper=0.05
   # starting point of I
-  mallowsinfer=PerMallows::lmm(t(dat),dist.name="kendall",estimation="approx")
-  mallowsinfer=mallowsinfer$mode
-  mallowsinfer[mallowsinfer>nRe]=0
-  I.start=mallowsinfer
+  if(init=="EMM"){
+    mallowsinfer=ExtMallows::EMM((dat))
+    mallowsinfer=as.numeric(mallowsinfer$op.pi0)
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  } else if(init=="mean"){
+    mallowsinfer=PerMallows::lmm(t(dat),dist.name="kendall",estimation="approx")
+    mallowsinfer=mallowsinfer$mode
+    mallowsinfer[mallowsinfer>nRe]=0
+    I.start=mallowsinfer
+  }
+
+
   # starting point of gamma
   smlgamma.start=rep(runif(1,smlgamma.lower,smlgamma.upper),m)
 
@@ -130,8 +142,8 @@ PAMA.B=function(datfile,nRe,iter=1000){
       smlgamma.tem=smlgamma.start[j]
       smlgamma.tem=smlgamma.tem+gamma.hyper[j]*rnorm(1)
       if(smlgamma.tem>0 ){
-        like.start=BARDMallowslikepower(dat[,j],I.start,phi.start,smlgamma.start[j])
-        like.tem=BARDMallowslikepower(dat[,j],I.start,phi.start,smlgamma.tem)
+        like.start=PAMAlike(dat[,j],I.start,phi.start,smlgamma.start[j])
+        like.tem=PAMAlike(dat[,j],I.start,phi.start,smlgamma.tem)
         if((like.tem) > like.start+log(runif(1))){
           smlgamma.start[j]=smlgamma.tem
         }

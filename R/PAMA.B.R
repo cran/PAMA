@@ -6,6 +6,7 @@ PAMA.B=function(datfile,nRe,iter=1000,init="EMM"){
   #' @import stats
   #' @import mc2d
   #' @import ExtMallows
+  #' @import rankdist
 
   #' @param datfile A matrix or dataframe. This is the data where our algorithm will work on. Each colomn denotes a ranker's ranking. The data should be in entity-based format.
   #' @param nRe A number. Number of relevant entities
@@ -105,19 +106,9 @@ PAMA.B=function(datfile,nRe,iter=1000,init="EMM"){
       pos1=which(I.start==j)
       pos2=which(I.start==(j-1))
       I.new=replace(I.start,c(pos1,pos2),I.start[c(pos2,pos1)])
-      nonzeropvec=rep(NA,2) # for nonzeros, it is a 2-dimensional multinomial distribution. rank j vs (j-1)
-      nonzeropvec[1]=fulllikepower(dat = dat,I = I.new,phi = phi.start,smlgamma = smlgamma.start)
-      nonzeropvec[2]=fulllikepower(dat = dat,I = I.start,phi = phi.start,smlgamma = smlgamma.start)
-      nonzeropvec=exp(nonzeropvec-(max(nonzeropvec)))
-      if(sum(is.nan(exp(zeropvec-(min(nonzeropvec)))))>1){
-        nonzeropvec=c(0.5,0.5)
-      }else{
-        nonzeropvec=nonzeropvec/sum(nonzeropvec)
-      }
+      nonzeropvec=PAMA.likediff2R(dat,I.new,I.start,phi.start,smlgamma.start,nRe)
 
-      gibbsrlz=mc2d::rmultinomial(1, 1,nonzeropvec) # multinomial sampling
-      pos=which(gibbsrlz==1)
-      if(pos==1){ # zero should change to nRe
+      if(nonzeropvec>log(runif(1))){ # zero should change to nRe
         I.start=I.new
       }
     }
@@ -130,9 +121,9 @@ PAMA.B=function(datfile,nRe,iter=1000,init="EMM"){
     ##################################
     phi.new=phi.start+(phi.hyper* rnorm(1))
     if (phi.new>0 ){
-      log.prob.start <- lapply(seq_len(ncol(Mallowsdat)), function(i) log(PerMallows::dmm(Mallowsdat[,i],I.start[I.start>0], phi.start*smlgamma.start[i])) )
-      log.prob.new <- lapply(seq_len(ncol(Mallowsdat)), function(i) log(PerMallows::dmm(Mallowsdat[,i],I.start[I.start>0], phi.new*smlgamma.start[i])) )
-      if ((sum(unlist(log.prob.new))) >sum(unlist(log.prob.start))+log(runif(1))){
+      log.prob.start <- sapply(seq_len(ncol(Mallowsdat)), function(i){-DistancePair(Mallowsdat[,i],I.start[I.start>0])*phi.start*smlgamma.start[i] - logZ.MM(phi.start*smlgamma.start[i],nRe)} )
+      log.prob.new <- sapply(seq_len(ncol(Mallowsdat)), function(i){-DistancePair(Mallowsdat[,i],I.start[I.start>0])*phi.new*smlgamma.start[i] - logZ.MM(phi.new*smlgamma.start[i],nRe)}  )
+      if ((sum(log.prob.new)) >sum(log.prob.start)+log(runif(1))){
         phi.start=phi.new
       }
     }

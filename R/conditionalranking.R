@@ -3,7 +3,7 @@ conditionalranking = function(I,bsrkr){
   # I is the true classification of entities
   rank_RE=bsrkr[I!=0]
   rank_BE=bsrkr[I==0]
-  tau01=unlist(lapply(seq_len(length(rank_BE)), function(i) (sum(rank_BE[i]>rank_RE))))
+  tau01=sapply(seq_len(length(rank_BE)), function(i) (sum(rank_BE[i]>rank_RE)))
   tau01=length(rank_RE)-tau01
   return(tau01)
 }
